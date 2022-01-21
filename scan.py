@@ -15,36 +15,44 @@ print("/n" + ip_addr)
 def welcome_message():
 
     print("-" * 50)
-    print("Welcome to " + np.nmap_version() + " !")
-    print("Now Running Basic Scan On All Ports: " + datetime())
+    print("Welcome to " + str(np.nmap_version_detection) + " !")
+    print("Nmap Will Run A Basic Port Scan Followed By An Advance Port Scan On Target: ")
     print("-" * 50)
 
 def basic_scan(ip):
 
-    print("/n Beginning Basic Scan!")
-
+    print("Beginning Basic Scan!: " + str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+    
     try:
-        np.scan_command(ip)
+        np.scan_command(ip, "T4", "-p-", "-oN", "basic-scan.txt")
     except:
         print("Failed Scan")
         exit()
+
+    print("Scan Completed: " + str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+    print(" - " * 50)
     
-    original_stdout = sys.stdout 
+def advance_scan(ip, ports):
+    
+    print("Beginning Advance Scan!: " + str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+    
+    try:
+        np.scan_command(ip, "T4", "-A", ports, "-oN", "basic-scan.txt")
+    except:
+        print("Failed Scan")
+        exit()
 
-    sys.stdout = sys.stderr 
-    print(np)
+    print("Scan Completed: " + str(datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+    print(" - " * 50)
 
-    sys.stdout = original_stdout 
 
-    print("Scan Completed! " + datetime())
+open_ports = None
 
 
 if ip_add_pattern.search(ip_addr):
     welcome_message()
     basic_scan(ip_addr)
+    advance_scan(ip_addr, open_ports)
 else:
     print("Invalid IPv4 address")
     exit()
-
-
-
