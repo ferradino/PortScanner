@@ -15,7 +15,7 @@ print(ip_addr)
 def welcome_message():
 
     print("-" * 50)
-    print("Welcome to " + str(np.nmap_version_detection) + " !")
+    print("Welcome to " + str(np.nmap_version_detection) + "!")
     print("Nmap Will Run A Basic Port Scan Followed By An Advance Port Scan On Target: ")
     print("-" * 50)
 
